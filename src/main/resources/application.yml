@@ -1,3 +1,9 @@
+server:
+  port: ${SERVER_PORT:8080}
 spring:
   application:
     name: stock-ms
+  data:
+    mongodb:
+      uri: mongodb://stock_db:password@localhost:27017/stock_db?authSource=admin
+      database: stock_db
