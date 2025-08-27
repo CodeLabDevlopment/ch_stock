@@ -12,7 +12,9 @@ import static org.springframework.data.web.config.EnableSpringDataWebSupport.Pag
 @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
 public class StockMsApplication {
 
-	public static void main(String[] args) {
+    // TODO: Esse serviço irá precisar receber eventos do ms de pedidos para atualizar o estoque dos produtos
+
+    public static void main(String[] args) {
 		SpringApplication.run(StockMsApplication.class, args);
 	}
 
