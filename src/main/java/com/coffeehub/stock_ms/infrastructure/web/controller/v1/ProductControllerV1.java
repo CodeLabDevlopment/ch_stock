@@ -8,9 +8,6 @@ import com.coffeehub.stock_ms.infrastructure.web.response.v1.ProductDetails;
 import com.coffeehub.stock_ms.infrastructure.web.response.v1.ProductResponseList;
 import com.coffeehub.stock_ms.infrastructure.web.routes.ProductRoutesV1;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,10 +21,9 @@ public class ProductControllerV1 implements ProductRoutesV1 {
     private final ListProductsCase getProductsCase;
 
     @Override
-    public ResponseEntity<Page<ProductResponseList>> listProducts(String search, Pageable pageable) {
+    public ResponseEntity<List<ProductResponseList>> listProducts(String search) {
         List<Product> products = this.getProductsCase.execute(search);
-        List<ProductResponseList> response = ProductMapper.toResponseList(products);
-        return ResponseEntity.ok().body(new PageImpl<>(response, pageable, response.size()));
+        return ResponseEntity.ok().body(ProductMapper.toResponseList(products));
     }
 
     @Override
