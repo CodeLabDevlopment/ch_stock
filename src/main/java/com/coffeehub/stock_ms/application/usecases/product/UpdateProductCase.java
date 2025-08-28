@@ -1,12 +1,15 @@
 package com.coffeehub.stock_ms.application.usecases.product;
 
 import com.coffeehub.stock_ms.application.gateway.LogsGateway;
+import com.coffeehub.stock_ms.application.gateway.MessageDispatcher;
 import com.coffeehub.stock_ms.application.gateway.PersistenceGateway;
+import com.coffeehub.stock_ms.domain.enums.UpdateType;
+import com.coffeehub.stock_ms.domain.model.MessageContext;
 import com.coffeehub.stock_ms.domain.model.Product;
 
 import java.time.LocalDateTime;
 
-public record UpdateProductCase(PersistenceGateway persistenceGateway, LogsGateway log) {
+public record UpdateProductCase(PersistenceGateway persistenceGateway, LogsGateway log, MessageDispatcher messageDispatcher) {
 
     public void execute(String productId, Product product) {
         Product existingProduct = this.persistenceGateway.findProductById(productId);
@@ -36,6 +39,8 @@ public record UpdateProductCase(PersistenceGateway persistenceGateway, LogsGatew
 
         this.persistenceGateway.save(updatedProduct);
         log.debug("Product with ID {} updated successfully.", productId);
+        this.messageDispatcher.sendMessage(new MessageContext(LocalDateTime.now(), UpdateType.UPDATE));
+        log.debug("Sending message to catalog service");
     }
 
 }
