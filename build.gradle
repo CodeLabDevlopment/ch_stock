@@ -18,6 +18,10 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	set('springCloudVersion', "2025.0.0")
+}
+
 dependencies {
 	// Spring
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -29,6 +33,10 @@ dependencies {
 
     // Database
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    // RabbitMQ
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
 
     // Actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -43,6 +51,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 tasks.named('test') {
