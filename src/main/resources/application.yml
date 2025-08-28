@@ -7,6 +7,26 @@ spring:
     mongodb:
       uri: mongodb://stock_db:password@localhost:27017/stock_db?authSource=admin
       database: stock_db
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+  cloud:
+    config:
+      fail-fast: true
+    stream:
+      bindings:
+        toCatalogService-out-0:
+          destination: updateCatalog
+          content-type: application/json
+      rabbit:
+        bindings:
+          toCatalogService-out-0:
+            producer:
+              transacted: true
+              exchange-type: direct
 logging:
   level:
     com.coffeehub: DEBUG
