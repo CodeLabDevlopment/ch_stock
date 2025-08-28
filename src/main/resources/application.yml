@@ -7,3 +7,6 @@ spring:
     mongodb:
       uri: mongodb://stock_db:password@localhost:27017/stock_db?authSource=admin
       database: stock_db
+logging:
+  level:
+    com.coffeehub: DEBUG
